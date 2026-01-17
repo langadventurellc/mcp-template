@@ -1,0 +1,60 @@
+# Claude Code Review workflow
+# Performs AI-powered code review on pull requests using Claude
+#
+# Required secrets:
+# - CLAUDE_CODE_OAUTH_TOKEN: OAuth token for Claude Code API
+# - GITHUB_TOKEN: Automatically provided by GitHub Actions
+#
+# Customize:
+# - Modify the prompt to fit your project's review criteria
+# - Adjust claude_args to enable/disable specific tools
+# - Update the project context section with your tech stack
+
+name: Claude Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    name: Claude Code Review
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Full history needed for accurate diff analysis
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Claude Code Review
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          claude_args: "--allowedTools View,GlobTool,GrepTool,BatchTool"
+          prompt: |
+            Please review the code changes in this pull request and provide feedback.
+
+            Focus on:
+            - Code quality and best practices
+            - Security vulnerabilities and potential issues
+            - Performance considerations
+            - Type safety and proper TypeScript annotations
+            - Error handling patterns
+            - Test coverage (if applicable)
+
+            Avoid reviewing files in: node_modules/, dist/, coverage/

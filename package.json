@@ -1,0 +1,71 @@
+{
+  "name": "{{NPM_SCOPE}}/{{PROJECT_NAME}}",
+  "version": "0.0.1",
+  "description": "{{PROJECT_DESCRIPTION}}",
+  "homepage": "https://github.com/{{GITHUB_ORG}}/{{GITHUB_REPO}}#readme",
+  "bugs": {
+    "url": "https://github.com/{{GITHUB_ORG}}/{{GITHUB_REPO}}/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/{{GITHUB_ORG}}/{{GITHUB_REPO}}.git"
+  },
+  "license": "MIT",
+  "author": "{{AUTHOR_NAME}} <{{AUTHOR_EMAIL}}>",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "main": "dist/server.js",
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "bin": {
+    "{{PROJECT_NAME}}": "dist/server.js"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/server.js",
+    "serve": "npm run build && npm run start",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:e2e": "npm run build && jest --testMatch=\"<rootDir>/src/**/__tests__/**/*.e2e.test.ts\" --testPathIgnorePatterns=\"/node_modules/\" --testTimeout=30000",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md,json}\" --log-level silent",
+    "quality": "npm run lint && npm run format && npm run type-check",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.31.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.0.15",
+    "eslint": "^9.31.0",
+    "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "jest": "^30.0.5",
+    "lint-staged": "^16.1.2",
+    "prettier": "^3.6.2",
+    "ts-jest": "^29.4.1",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.38.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  }
+}

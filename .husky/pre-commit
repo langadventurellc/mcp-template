@@ -1,0 +1,16 @@
+#!/bin/sh
+# Pre-commit hook for ensuring code quality before commits
+# This hook runs lint-staged for formatting and additional quality checks for code files
+
+# Run lint-staged for conditional formatting
+# This runs eslint --fix and prettier --write on staged files
+npx lint-staged
+
+# Run additional quality checks if code files were changed
+# This provides an extra layer of validation beyond lint-staged
+if git diff --staged --name-only | grep -E '\.(ts|tsx|js|jsx)$' > /dev/null; then
+  echo "Code files detected, running quality checks..."
+  npm run lint
+  npm run type-check
+  npm test
+fi

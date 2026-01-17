@@ -96,12 +96,12 @@ Pure utility functions with single responsibilities. Keep these focused and test
 
 ## Naming Conventions
 
-| Type             | Convention  | Example              |
-| ---------------- | ----------- | -------------------- |
-| Types/Interfaces | PascalCase  | `ServerConfig.ts`    |
-| Functions/Utils  | camelCase   | `generateId.ts`      |
-| Constants        | UPPER_SNAKE | `DEFAULT_TIMEOUT`    |
-| Test files       | `*.test.ts` | `generateId.test.ts` |
+| Type             | Convention      | Example              |
+| ---------------- | --------------- | -------------------- |
+| Types/Interfaces | PascalCase      | `ServerConfig.ts`    |
+| Functions/Utils  | camelCase       | `generateId.ts`      |
+| Constants        | UPPER_SNAKE     | `DEFAULT_TIMEOUT`    |
+| Test files       | `*.test.ts`     | `generateId.test.ts` |
 | E2E tests        | `*.e2e.test.ts` | `server.e2e.test.ts` |
 
 ## Architectural Principles
